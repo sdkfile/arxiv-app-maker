@@ -1,0 +1,27 @@
+{
+  "name": "arxiv-app-pipeline",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "pipeline": "tsx pipeline.ts",
+    "server": "tsx bot/server.ts",
+    "dev": "tsx watch bot/server.ts",
+    "collect": "bash collector/collect.sh",
+    "filter": "tsx filter/score.ts",
+    "notify": "tsx bot/webhook.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@hono/node-server": "^1.13.0",
+    "discord.js": "^14.16.0",
+    "hono": "^4.6.0",
+    "dotenv": "^16.4.0",
+    "winston": "^3.17.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

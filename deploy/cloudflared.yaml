@@ -1,0 +1,7 @@
+tunnel: arxiv-app-dispatch
+credentials-file: ~/.cloudflared/credentials.json
+
+ingress:
+  - hostname: arxiv-dispatch.your-domain.com
+    service: http://localhost:3000
+  - service: http_status:404
