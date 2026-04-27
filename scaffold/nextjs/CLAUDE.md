@@ -37,8 +37,15 @@
 - 미니멀, 여백 충분히
 - zinc 베이스 컬러, 포인트 색상은 논문 주제에 맞게
 - 모바일 우선 반응형
-- 다크모드 지원 (next-themes + CSS variables)
+- 다크모드 + 라이트모드 완벽 지원 (next-themes + CSS variables)
 - Geist Sans(UI) + Geist Mono(코드) 조합
+
+## 다크모드/라이트모드 가독성 (필수)
+- **모든 텍스트는 라이트/다크 양쪽에서 읽힐 수 있어야 함** — 절대로 안 보이는 글씨 없도록
+- 텍스트 색상에 하드코딩된 색상(white, black, gray-900 등) 사용 금지 → CSS variable 기반 시맨틱 컬러만 사용 (foreground, muted-foreground, primary-foreground 등)
+- 배경과 텍스트 간 WCAG AA 기준 대비율 4.5:1 이상 유지
+- 차트/시각화 요소도 다크모드에서 선명하게 보여야 함 (밝은 색 사용)
+- 테스트: 반드시 라이트모드/다크모드 양쪽에서 모든 페이지 확인 후 완료
 
 ## 파일 구조
 ```

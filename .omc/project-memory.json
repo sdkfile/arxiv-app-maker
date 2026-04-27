@@ -1,0 +1,335 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1777194918283,
+  "projectRoot": "/Users/sdkfile/Desktop/business/Nullpointer Studio/arxiv-app-maker",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [
+    {
+      "path": "bot/client.ts",
+      "accessCount": 10,
+      "lastAccessed": 1777271145410,
+      "type": "file"
+    },
+    {
+      "path": "generator/dispatch.ts",
+      "accessCount": 8,
+      "lastAccessed": 1777271091737,
+      "type": "file"
+    },
+    {
+      "path": ".env",
+      "accessCount": 6,
+      "lastAccessed": 1777272034580,
+      "type": "file"
+    },
+    {
+      "path": "generator/templates/nextjs.md",
+      "accessCount": 5,
+      "lastAccessed": 1777272283132,
+      "type": "file"
+    },
+    {
+      "path": "filter/score.ts",
+      "accessCount": 4,
+      "lastAccessed": 1777196882791,
+      "type": "file"
+    },
+    {
+      "path": "bot/server.ts",
+      "accessCount": 4,
+      "lastAccessed": 1777261278462,
+      "type": "file"
+    },
+    {
+      "path": "pipeline.ts",
+      "accessCount": 4,
+      "lastAccessed": 1777261283980,
+      "type": "file"
+    },
+    {
+      "path": "generator/post-process.ts",
+      "accessCount": 4,
+      "lastAccessed": 1777271096715,
+      "type": "file"
+    },
+    {
+      "path": "bot/verify.ts",
+      "accessCount": 3,
+      "lastAccessed": 1777195156944,
+      "type": "file"
+    },
+    {
+      "path": "collector/collect.sh",
+      "accessCount": 3,
+      "lastAccessed": 1777196884953,
+      "type": "file"
+    },
+    {
+      "path": "tsconfig.json",
+      "accessCount": 3,
+      "lastAccessed": 1777269790667,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/app/api/webhook/route.ts",
+      "accessCount": 3,
+      "lastAccessed": 1777270308135,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/prisma/schema.prisma",
+      "accessCount": 3,
+      "lastAccessed": 1777270332903,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/lib/supabase.ts",
+      "accessCount": 3,
+      "lastAccessed": 1777270335663,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/lib/polar.ts",
+      "accessCount": 3,
+      "lastAccessed": 1777270336848,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/app/layout.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1777270346335,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/app/page.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1777270359776,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/package.json",
+      "accessCount": 3,
+      "lastAccessed": 1777270367263,
+      "type": "file"
+    },
+    {
+      "path": "bot/interaction.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777195148890,
+      "type": "file"
+    },
+    {
+      "path": "shared/config.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777261248146,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/next.config.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777270100954,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/tsconfig.json",
+      "accessCount": 2,
+      "lastAccessed": 1777270101721,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/tailwind.config.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777270102143,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/postcss.config.mjs",
+      "accessCount": 2,
+      "lastAccessed": 1777270102499,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/components.json",
+      "accessCount": 2,
+      "lastAccessed": 1777270103452,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/.env.example",
+      "accessCount": 2,
+      "lastAccessed": 1777270104086,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/app/globals.css",
+      "accessCount": 2,
+      "lastAccessed": 1777270109543,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/app/demo/page.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777270110000,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/lib/prisma.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777270111584,
+      "type": "file"
+    },
+    {
+      "path": "scaffold/nextjs/src/lib/utils.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777270111935,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 1,
+      "lastAccessed": 1777194993244,
+      "type": "file"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 1,
+      "lastAccessed": 1777194999875,
+      "type": "file"
+    },
+    {
+      "path": "shared/logger.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777195016103,
+      "type": "file"
+    },
+    {
+      "path": "filter/types.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777195020513,
+      "type": "file"
+    },
+    {
+      "path": "filter/criteria.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777195035967,
+      "type": "file"
+    },
+    {
+      "path": "collector/schedule.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777195055400,
+      "type": "file"
+    },
+    {
+      "path": "bot/embeds.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777195072165,
+      "type": "file"
+    },
+    {
+      "path": "bot/webhook.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777195076797,
+      "type": "file"
+    },
+    {
+      "path": "generator/templates/ios.md",
+      "accessCount": 1,
+      "lastAccessed": 1777195167101,
+      "type": "file"
+    },
+    {
+      "path": "generator/templates/watchos.md",
+      "accessCount": 1,
+      "lastAccessed": 1777195170557,
+      "type": "file"
+    },
+    {
+      "path": "generator/templates/macos.md",
+      "accessCount": 1,
+      "lastAccessed": 1777195173188,
+      "type": "file"
+    },
+    {
+      "path": "generator/templates/react-native.md",
+      "accessCount": 1,
+      "lastAccessed": 1777195176657,
+      "type": "file"
+    },
+    {
+      "path": "generator/templates/cli.md",
+      "accessCount": 1,
+      "lastAccessed": 1777195181427,
+      "type": "file"
+    },
+    {
+      "path": "generator/templates/chrome-ext.md",
+      "accessCount": 1,
+      "lastAccessed": 1777195185260,
+      "type": "file"
+    },
+    {
+      "path": "deploy/Dockerfile",
+      "accessCount": 1,
+      "lastAccessed": 1777195197543,
+      "type": "file"
+    },
+    {
+      "path": "deploy/cloudflared.yaml",
+      "accessCount": 1,
+      "lastAccessed": 1777195203413,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 1,
+      "lastAccessed": 1777195219129,
+      "type": "file"
+    },
+    {
+      "path": "collector/enrich.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777196693092,
+      "type": "file"
+    },
+    {
+      "path": "scripts/start-bot.sh",
+      "accessCount": 1,
+      "lastAccessed": 1777261446578,
+      "type": "file"
+    },
+    {
+      "path": "scripts/run-pipeline.sh",
+      "accessCount": 1,
+      "lastAccessed": 1777261447435,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
