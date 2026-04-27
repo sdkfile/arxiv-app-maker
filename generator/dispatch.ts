@@ -4,7 +4,7 @@ import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { config } from "../shared/config.js";
 import { logger } from "../shared/logger.js";
-import { postProcess } from "./post-process.js";
+import { postProcess, type PostProcessResult } from "./post-process.js";
 import type { DispatchRequest } from "../bot/interaction.js";
 import type { Platform } from "../filter/types.js";
 
@@ -12,14 +12,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const templatesDir = resolve(__dirname, "templates");
 const scaffoldDir = resolve(__dirname, "..", "scaffold");
 
+export type StatusCallback = (stage: string, detail: string) => Promise<void>;
+
 function loadTemplate(platform: Platform): string {
-  const templatePath = resolve(templatesDir, `${platform}.md`);
-  return readFileSync(templatePath, "utf-8");
+  return readFileSync(resolve(templatesDir, `${platform}.md`), "utf-8");
 }
 
 function buildPrompt(req: DispatchRequest): string {
-  const template = loadTemplate(req.platform);
-  return template
+  return loadTemplate(req.platform)
     .replace("{{title}}", req.paperTitle)
     .replace("{{abstract}}", req.paperAbstract)
     .replace("{{categories}}", req.paperCategories.join(", "))
@@ -33,15 +33,15 @@ function sanitizeId(id: string): string {
 function copyScaffold(platform: Platform, outputDir: string): boolean {
   const src = resolve(scaffoldDir, platform);
   if (!existsSync(src)) return false;
-
   cpSync(src, outputDir, { recursive: true });
-  logger.info(`Scaffold copied: ${platform} → ${outputDir}`);
   return true;
 }
 
 export async function dispatchAppGeneration(
-  req: DispatchRequest
-): Promise<void> {
+  req: DispatchRequest,
+  onStatus?: StatusCallback
+): Promise<PostProcessResult | null> {
+  const status = onStatus ?? (async () => {});
   const appId = `${sanitizeId(req.paperId)}-${req.platform}`;
   const outputDir = resolve(
     config.APPS_OUTPUT_DIR.replace("~", process.env.HOME ?? "~"),
@@ -49,15 +49,18 @@ export async function dispatchAppGeneration(
   );
   mkdirSync(outputDir, { recursive: true });
 
+  await status("scaffold", "📦 보일러플레이트 복사 중...");
   const hasScaffold = copyScaffold(req.platform, outputDir);
 
   if (hasScaffold) {
+    await status("install", "📥 npm install 실행 중...");
     execSync("npm install", { cwd: outputDir, stdio: "inherit", timeout: 120_000 });
   }
 
   const prompt = buildPrompt(req);
   logger.info(`Generating ${req.platform} app for: ${req.paperTitle}`);
-  logger.info(`Output dir: ${outputDir}`);
+
+  await status("generate", `🤖 Claude Code 앱 생성 중...\n📂 \`${outputDir}\``);
 
   try {
     execSync(
@@ -71,17 +74,24 @@ export async function dispatchAppGeneration(
     );
 
     logger.info(`App generated: ${outputDir}`);
+    await status("post", "🚀 GitHub push + 배포 처리 중...");
 
-    await postProcess({
+    const result = await postProcess({
       appId,
       outputDir,
       platform: req.platform,
-      paper: {
-        title: req.paperTitle,
-        url: req.paperUrl,
-      },
+      paper: { title: req.paperTitle, url: req.paperUrl },
     });
+
+    const links = [
+      result.repoUrl ? `📦 [GitHub](${result.repoUrl})` : null,
+      result.deployUrl ? `🌐 [Live](${result.deployUrl})` : null,
+    ].filter(Boolean).join(" | ");
+
+    await status("done", `✅ 앱 생성 완료!\n${links}`);
+    return result;
   } catch (err) {
+    await status("error", `❌ 생성 실패: ${err}`);
     logger.error(`Generation failed for ${appId}: ${err}`);
     throw err;
   }

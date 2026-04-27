@@ -13,7 +13,7 @@ import {
 import { config } from "../shared/config.js";
 import { logger } from "../shared/logger.js";
 import { PLATFORM_LABELS, type Platform } from "../filter/types.js";
-import { dispatchAppGeneration } from "../generator/dispatch.js";
+import { dispatchAppGeneration, type StatusCallback } from "../generator/dispatch.js";
 import type { ScoredPaper } from "../filter/types.js";
 import { buildPaperEmbed } from "./embeds.js";
 
@@ -80,18 +80,58 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
       const paperUrl = cached?.url ?? "";
 
       await interaction.reply({
-        content: `⏳ **${paperTitle}** → ${PLATFORM_LABELS[platform]} 앱 생성 시작...`,
+        content: `⏳ **${paperTitle}** → ${PLATFORM_LABELS[platform]} 앱 생성을 시작합니다...`,
         flags: [MessageFlags.Ephemeral],
       });
 
-      dispatchAppGeneration({
-        paperId,
-        paperTitle,
-        paperAbstract,
-        paperCategories,
-        paperUrl,
-        platform,
-      }).catch((err) => logger.error(`Dispatch failed: ${err}`));
+      const channel = interaction.channel;
+      if (!channel || !("send" in channel)) return;
+
+      const progressMsg = await (channel as TextChannel).send({
+        embeds: [{
+          title: `🔧 앱 생성 중: ${paperTitle}`,
+          description: `플랫폼: **${PLATFORM_LABELS[platform]}**\n\n⏳ 초기화 중...`,
+          color: 0xffaa00,
+          timestamp: new Date().toISOString(),
+        }],
+      });
+
+      const stages = ["scaffold", "install", "generate", "post", "done"];
+      const stageEmojis: Record<string, string> = {
+        scaffold: "📦", install: "📥", generate: "🤖", post: "🚀", done: "✅", error: "❌",
+      };
+
+      const completedStages: string[] = [];
+
+      const onStatus: StatusCallback = async (stage, detail) => {
+        completedStages.push(stage);
+
+        const progress = stages.map((s) => {
+          if (completedStages.includes(s)) return `${stageEmojis[s]} ~~${s}~~ ✓`;
+          if (s === stage) return `▶ ${stageEmojis[s]} **${s}**`;
+          return `⬜ ${s}`;
+        }).join("\n");
+
+        const color = stage === "done" ? 0x00ff88 : stage === "error" ? 0xff4444 : 0xffaa00;
+
+        await progressMsg.edit({
+          embeds: [{
+            title: stage === "done"
+              ? `✅ 완료: ${paperTitle}`
+              : stage === "error"
+                ? `❌ 실패: ${paperTitle}`
+                : `🔧 생성 중: ${paperTitle}`,
+            description: `플랫폼: **${PLATFORM_LABELS[platform]}**\n\n${progress}\n\n${detail}`,
+            color,
+            timestamp: new Date().toISOString(),
+          }],
+        }).catch((err: Error) => logger.error(`Progress update failed: ${err}`));
+      };
+
+      dispatchAppGeneration(
+        { paperId, paperTitle, paperAbstract, paperCategories, paperUrl, platform },
+        onStatus
+      ).catch((err) => logger.error(`Dispatch failed: ${err}`));
     }
   } catch (err) {
     logger.error(`Interaction error: ${err}`);

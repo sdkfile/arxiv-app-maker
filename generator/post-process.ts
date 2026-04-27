@@ -1,7 +1,6 @@
 import { execSync } from "child_process";
 import { config } from "../shared/config.js";
 import { logger } from "../shared/logger.js";
-import { buildCompletionEmbed } from "../bot/embeds.js";
 import type { Platform } from "../filter/types.js";
 
 interface PostProcessInput {
@@ -11,11 +10,16 @@ interface PostProcessInput {
   paper: { title: string; url: string };
 }
 
+export interface PostProcessResult {
+  repoUrl: string;
+  deployUrl?: string;
+}
+
 function run(cmd: string, cwd: string): string {
   return execSync(cmd, { cwd, encoding: "utf-8", timeout: 120_000 });
 }
 
-export async function postProcess(input: PostProcessInput): Promise<void> {
+export async function postProcess(input: PostProcessInput): Promise<PostProcessResult> {
   const { appId, outputDir, platform, paper } = input;
 
   logger.info(`Post-processing: ${appId}`);
@@ -50,22 +54,7 @@ export async function postProcess(input: PostProcessInput): Promise<void> {
     }
   }
 
-  try {
-    const embed = buildCompletionEmbed(
-      { title: paper.title, html_url: paper.url },
-      platform,
-      repoUrl,
-      deployUrl
-    );
-    await fetch(config.DISCORD_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(embed),
-    });
-    logger.info("Completion notification sent");
-  } catch (err) {
-    logger.error(`Discord notification failed: ${err}`);
-  }
+  return { repoUrl, deployUrl };
 }
 
 function getGitHubUser(): string {
